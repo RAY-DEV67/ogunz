@@ -18,7 +18,7 @@ export function Contact() {
         </div>
         <form
           className="w-[90%] p-[1rem] border border-[#000009] my-[1rem] flex flex-col"
-          action="https://formsubmit.co/henryekene8@gmail.com" method="POST"
+          action="https://formsubmit.co/ogunzshotit@gmail.com" method="POST"
         >
           <label className="text-left mt-[0.5rem] text-[1.5rem]">Name</label>
           <input
