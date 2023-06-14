@@ -157,7 +157,7 @@ export function LandingPage() {
               />
             </SwiperSlide>
 
-            <div className="slider-controler mt-[-2rem] mb-[2rem] sm:block">
+            <div className="slider-controler mt-[-2rem] mb-[2rem] hidden sm:block">
               <div className="swiper-button-prev bg-[#D3D3D3] slider-arrow">
                 <svg
                   viewBox="-3 0 32 32"
