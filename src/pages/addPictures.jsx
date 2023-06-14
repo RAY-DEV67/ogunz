@@ -6,16 +6,12 @@ import { storage } from "../config/firebase";
 import { updateDoc, addDoc, collection } from "firebase/firestore";
 
 export function AddPicture() {
-
   const [isfile, setfile1] = useState("");
   const [loading, setloading] = useState(false);
   const [category, setcategory] = useState("Categories");
   const [categories, setcategories] = useState();
-  const [highlight, sethighlight] = useState(false);
-
 
   const [errors, seterrors] = useState({});
-
 
   const validateForm = () => {
     let tempErrors = {};
@@ -29,11 +25,9 @@ export function AddPicture() {
     return Object.keys(tempErrors).length === 0;
   };
 
- 
-
   const upload = async () => {
-    setloading(true)
-    const docRef = await addDoc(collection(db, "Streetically"), {
+    setloading(true);
+    const docRef = await addDoc(collection(db, "Ogunz"), {
       category: category,
     });
 
@@ -41,21 +35,26 @@ export function AddPicture() {
     storage
       .ref("/images/" + isfile.name)
       .put(isfile)
-      .on("state_changed", alert("Product Successfully uploaded"), alert, () => {
-        storage
-          .ref("images")
-          .child(isfile.name)
-          .getDownloadURL()
-          .then((imgUrl) => {
-            console.log(imgUrl)
-            updateDoc(docRef, {
-              images: imgUrl,
-            //   username: user?.displayName,
+      .on(
+        "state_changed",
+        alert("Product Successfully uploaded"),
+        alert,
+        () => {
+          storage
+            .ref("images")
+            .child(isfile.name)
+            .getDownloadURL()
+            .then((imgUrl) => {
+              console.log(imgUrl);
+              updateDoc(docRef, {
+                images: imgUrl,
+                //   username: user?.displayName,
+              });
             });
-          });
-      });
+        }
+      );
 
-      setloading(false)
+    setloading(false);
   };
 
   const handleSubmit = async (event) => {
@@ -67,79 +66,85 @@ export function AddPicture() {
       // console.log(isfile.name);
     } else {
       console.log("form is invalid");
-      setloading(false)
+      setloading(false);
     }
   };
 
   return (
-    <div className="w-[100vw] flex flex-col items-center">
+    <div className="w-[100vw] flex flex-col items-center text-[#000009]">
       <div className="pt-[80px] h-[100vh] lg:w-[60%] w-[90vw]">
-          <p className="text-center py-[1rem] text-[2rem]">Add A New Picture</p>
-          <div className="flex flex-col items-center">
-            <form
-              onSubmit={handleSubmit}
-              className="w-[90%] mb-[2rem] rounded-[10px] text-[1.5rem] border flex flex-col px-[1rem] pb-[2.5rem]"
+        <p className="text-center py-[1rem] text-[2rem]">Add A New Picture</p>
+        <div className="flex flex-col items-center">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[90%] mb-[2rem] rounded-[10px] text-[1.5rem] border border-[#000009] flex flex-col px-[1rem] pb-[2.5rem]"
+          >
+            <div
+              onClick={() => {
+                setcategories(!categories);
+              }}
+              className="flex text-black mt-[2rem] px-[1rem] justify-between border py-[0.5rem] rounded-[10px] items-center bg-white"
             >
-               <div
-                onClick={() => {
-                  setcategories(!categories);
-                }}
-                className="flex text-black mt-[2rem] px-[1rem] justify-between border py-[0.5rem] rounded-[10px] items-center bg-white"
-              >
-                <p >{category}</p>
-                <p>&#8964;</p>
-              </div>
-              {errors.category && <p className="error">{errors.category}</p>}
+              <p>{category}</p>
+              <p>&#8964;</p>
+            </div>
+            {errors.category && <p className="error">{errors.category}</p>}
 
-              {categories ? (
-                <div className="flex flex-col items-center mt-[1rem] bg-blue-300 py-[1rem] rounded-[10px]">
-                  <p
-                    onClick={() => {
-                      setcategories(false);
-                      setcategory("Engagements");
-                    }}
-                    className="w-[100%] text-center pb-[0.5rem]"
-                  >
-                    Engagements
-                  </p>
-                  <p
-                    onClick={() => {
-                      setcategories(false);
-                      setcategory("Weddings");
-                    }}
-                    className="border-b-[2px] border-t-[2px] w-[100%] text-center py-[0.5rem]"
-                  >
-                   Weddings
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
-
-              <div className="mt-[2rem]">
-                <h2>Add photo</h2>
-                <div className="flex flex-col">
-                  <div>
-                    <input
-                      className="mt-[1rem]"
-                      type="file"
-                   
-                      name="photos"
-                      onChange={(event) => {
-                        setfile1(event.target.files[0]);
-                      }}
-                    />
-                    {errors.file1 && <p className="error">{errors.file1}</p>}
-                  </div>
- 
-                </div>
-                <p className="text-[12px] mt-[1rem]">
-                  Each picture must not exceed 5MB
+            {categories ? (
+              <div className="flex flex-col items-center mt-[1rem] bg-blue-300 py-[1rem] rounded-[10px]">
+                <p
+                  onClick={() => {
+                    setcategories(false);
+                    setcategory("Documentary");
+                  }}
+                  className="w-[100%] text-center pb-[0.5rem]"
+                >
+                  Documentary
+                </p>
+                <p
+                  onClick={() => {
+                    setcategories(false);
+                    setcategory("Events");
+                  }}
+                  className="border-b-[2px] border-t-[2px] w-[100%] text-center py-[0.5rem]"
+                >
+                  Events
+                </p>
+                <p
+                  onClick={() => {
+                    setcategories(false);
+                    setcategory("Portraits");
+                  }}
+                  className="border-b-[2px] border-t-[2px] w-[100%] text-center py-[0.5rem]"
+                >
+                  Portraits
                 </p>
               </div>
+            ) : (
+              ""
+            )}
 
+            <div className="mt-[2rem]">
+              <h2>Add photo</h2>
+              <div className="flex flex-col">
+                <div>
+                  <input
+                    className="mt-[1rem]"
+                    type="file"
+                    name="photos"
+                    onChange={(event) => {
+                      setfile1(event.target.files[0]);
+                    }}
+                  />
+                  {errors.file1 && <p className="error">{errors.file1}</p>}
+                </div>
+              </div>
+              <p className="text-[12px] mt-[1rem]">
+                Each picture must not exceed 5MB
+              </p>
+            </div>
 
-              {/* <input
+            {/* <input
                 className="mt-[1rem] py-[0.5rem] rounded-[10px] px-[1rem]"
                 type="text"
                 placeholder="TITLE*"
@@ -202,15 +207,14 @@ export function AddPicture() {
               </div>
               {errors.price && <p className="error">{errors.price}</p>} */}
 
-
-              <input
-                type="submit"
-                value={loading ? "Sending Product..." : "Post Picture"}
-                className="text-center bg-[#3EB812] font-bold text-white mt-[2rem] border py-[0.5rem] rounded-[10px] items-center"
-              />
-            </form>
-          </div>
+            <input
+              type="submit"
+              value={loading ? "Sending Product..." : "Post Picture"}
+              className="text-center bg-[#3EB812] font-bold text-white mt-[2rem] border py-[0.5rem] rounded-[10px] items-center"
+            />
+          </form>
         </div>
+      </div>
     </div>
   );
 }

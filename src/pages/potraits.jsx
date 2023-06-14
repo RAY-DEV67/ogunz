@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TopCard } from "../components/topcard";
 
-export function Engagements() {
+export function Potraits() {
   //   const { product } = useParams();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ export function Engagements() {
   useEffect(() => {
     setloading(true);
     setempty(false);
-    db.collection("Streetically").where("category", "==", "Engagements")
+    db.collection("Ogunz").where("category", "==", "Portraits")
       .get()
       .then((collections) => {
         const cloths = collections.docs.map((cloths) => {
@@ -37,9 +37,9 @@ export function Engagements() {
   
 
   return (
-    <div className="bg-[#000009]">
+    <div className="text-[#000009] bg-[#C2CEDA]">
       <div className="flex flex-col items-center lg:top-[13%] pt-[70px] lg:z-[-1]">
-      <h1 className="text-[3rem] font-bold">Engagements</h1>
+      <h1 className="text-[3rem] font-bold">Portraits</h1>
         <div className="mb-[5rem] flex flex-wrap gap-3 w-[90vw] items-center justify-center mt-[1rem]">
           {clothsList.map((post, index) => {
             return (
